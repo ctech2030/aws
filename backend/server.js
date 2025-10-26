@@ -19,10 +19,28 @@ const groq = new Groq({
 // CORS configuration
 const allowedOrigins = process.env.ALLOWED_ORIGINS ? 
   process.env.ALLOWED_ORIGINS.split(',') : 
-  ['https://chipper-snickerdoodle-ed545c.netlify.app'];
+  ['https://shiv-chat.netlify.app', 'http://localhost:3001', 'http://localhost:3000'];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    // Debug: Log the origin being checked
+    console.log('CORS Check - Origin received:', origin);
+    console.log('CORS Check - Allowed origins:', allowedOrigins);
+    
+    // Allow requests with no origin (like Postman, mobile apps, etc.)
+    if (!origin) {
+      console.log('CORS Check - No origin, allowing request');
+      return callback(null, true);
+    }
+    
+    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
+      console.log('CORS Check - Origin allowed');
+      callback(null, true);
+    } else {
+      console.log('CORS Check - Origin BLOCKED:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
