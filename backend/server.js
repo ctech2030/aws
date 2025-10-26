@@ -103,7 +103,9 @@ app.post('/api/chat', async (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Backend server running on http://localhost:${PORT}`);
+// Start server — bind to 0.0.0.0 so external hosts can connect
+const HOST = "0.0.0.0";
+app.listen(PORT, HOST, () => {
+  console.log(`🚀 Backend server running on http://${HOST}:${PORT}`);
   console.log(`🤖 Using Groq model: ${GROQ_MODEL}`);
 });
