@@ -64,7 +64,7 @@ fi
 
 # Create application directory
 echo "📁 Setting up application directory..."
-APP_DIR="/home/ec2-user/groq-chat"
+APP_DIR="/home/ec2-user/git/aws"
 mkdir -p $APP_DIR
 cd $APP_DIR
 
